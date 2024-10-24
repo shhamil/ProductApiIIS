@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Product>
+<div class="container">
+    <h1 class="mt-4 mb-4">Продукты</h1>
+
+    <form asp-controller="Products" asp-action="Index" method="get" class="form-inline mb-4">
+        <input type="text" name="name" class="form-control mr-2" placeholder="Фильтровать по имени" />
+        <button type="submit" class="btn btn-primary">Поиск</button>
+    </form>
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Имя</th>
+                <th>Описание</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@product.ID" class="btn btn-warning btn-sm">Редактировать</a>
+                        <form asp-action="Delete" asp-route-id="@product.ID" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить этот продукт?');">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Create" class="btn btn-success">Добавить новый продукт</a>
+</div>
